@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { answerQuestion, canAdvance, createMissionState, nextSlide } from '../app/js/mission-state.js';
+
+test('ошибка блокирует переход, правильный ответ открывает его',()=>{
+  const slide={kind:'question',selection:'single',correct:1};
+  let state=createMissionState(2);
+  state=answerQuestion(state,slide,0);
+  assert.equal(state.feedback,'wrong');
+  assert.equal(canAdvance(state,slide),false);
+  state=answerQuestion(state,slide,1);
+  assert.equal(state.feedback,'correct');
+  assert.equal(canAdvance(state,slide),true);
+});
+
+test('вопрос с признаками требует точное множество из трёх ответов',()=>{
+  const slide={kind:'question',selection:'multiple',correctSet:[0,1,2]};
+  let state=createMissionState(1);
+  state=answerQuestion(state,slide,0);
+  state=answerQuestion(state,slide,1);
+  assert.equal(canAdvance(state,slide),false);
+  state=answerQuestion(state,slide,2);
+  assert.equal(canAdvance(state,slide),true);
+  assert.equal(nextSlide(state,8).slide,2);
+});

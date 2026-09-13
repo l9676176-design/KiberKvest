@@ -1,0 +1,15 @@
+{
+  "name": "КиберКвест — Решай вместе",
+  "short_name": "КиберКвест",
+  "description": "Интерактивные истории о цифровой безопасности для детей, семей и классов",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#eaf2ff",
+  "theme_color": "#132444",
+  "icons": [
+    {"src":"assets/ui/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
