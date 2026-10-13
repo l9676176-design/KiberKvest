@@ -1,6 +1,6 @@
 import { MISSIONS } from '../data/missions/manifest.js';
 import { answerPlaybackItems, audioPathsForSlide, playFanfare, playRecorded, playRecordedSequence, shouldAutoNarrate, speak, stopSpeech } from './audio.js';
-import { answerQuestion, createMissionState, nextSlide, previousSlide } from './mission-state.js';
+import { answerQuestion, createMissionState, nextSlide, previousSlide } from './mission-state.js?v=20261013-8';
 import { checkNetwork, getOfflineState } from './network.js';
 import { loadPreferences, loadProgress, savePreferences, saveProgress } from './preferences.js';
 import { navigate, parseRoute } from './router.js';
@@ -11,7 +11,7 @@ import { renderDownloads } from '../screens/downloads.js';
 import { renderLibrary } from '../screens/library.js';
 import { renderLoading } from '../screens/loading.js';
 import { renderMenu } from '../screens/menu.js';
-import { renderMissionPlayer, narrationText } from '../screens/mission-player.js';
+import { renderMissionPlayer, narrationText } from '../screens/mission-player.js?v=20261013-8';
 import { renderMode } from '../screens/mode.js';
 import { renderOffline } from '../screens/offline.js';
 import { renderResult } from '../screens/result.js';

@@ -77,3 +77,11 @@ test('страница, стили и скрипты проверяются в �
  assert.match(worker,/networkFirst/);
  assert.match(main,/updateViaCache:'none'/);
 });
+
+test('исправления вопроса 4 загружаются по новым адресам, минуя старый кэш браузера',async()=>{
+ const index=await readFile(new URL('../src/index.html',import.meta.url),'utf8');
+ const main=await readFile(new URL('../src/js/main.js',import.meta.url),'utf8');
+ assert.match(index,/src="js\/main\.js\?v=20261013-8"/);
+ assert.match(main,/from '\.\/mission-state\.js\?v=20261013-8'/);
+ assert.match(main,/from '\.\.\/screens\/mission-player\.js\?v=20261013-8'/);
+});
