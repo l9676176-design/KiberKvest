@@ -1,6 +1,6 @@
-import { MISSIONS } from '../data/missions/manifest.js?v=20261013-9';
-import { answerPlaybackItems, audioPathsForSlide, feedbackForAnswer, playFanfare, playRecorded, playRecordedSequence, shouldAutoNarrate, speak, stopSpeech } from './audio.js?v=20261013-9';
-import { answerQuestion, createMissionState, nextSlide, previousSlide } from './mission-state.js?v=20261013-9';
+import { MISSIONS } from '../data/missions/manifest.js?v=20261014-1';
+import { answerPlaybackItems, audioPathsForSlide, feedbackForAnswer, playFanfare, playRecorded, playRecordedSequence, shouldAutoNarrate, speak, stopSpeech } from './audio.js?v=20261014-1';
+import { answerQuestion, createMissionState, nextSlide, previousSlide } from './mission-state.js?v=20261014-1';
 import { checkNetwork, getOfflineState } from './network.js';
 import { loadPreferences, loadProgress, savePreferences, saveProgress } from './preferences.js';
 import { navigate, parseRoute } from './router.js';
@@ -11,7 +11,7 @@ import { renderDownloads } from '../screens/downloads.js';
 import { renderLibrary } from '../screens/library.js';
 import { renderLoading } from '../screens/loading.js';
 import { renderMenu } from '../screens/menu.js';
-import { renderMissionPlayer, narrationText } from '../screens/mission-player.js?v=20261013-9';
+import { renderMissionPlayer, narrationText } from '../screens/mission-player.js?v=20261014-1';
 import { renderMode } from '../screens/mode.js';
 import { renderOffline } from '../screens/offline.js';
 import { renderResult } from '../screens/result.js';
@@ -110,13 +110,6 @@ app.addEventListener('change',(event)=>{
  const control=event.target.closest('[data-setting]');if(!control)return;
  const key=control.dataset.setting;
  const value=control.type==='checkbox'?control.checked:control.type==='range'?Number(control.value):control.value;
- preferences=savePreferences(localStorage,{[key]:value});
- document.documentElement.classList.toggle('reduce-motion',preferences.reducedMotion);
-});
-
-app.addEventListener('change',(event)=>{
- const key=event.target.dataset.setting;if(!key)return;
- const value=event.target.type==='checkbox'?event.target.checked:event.target.type==='range'?Number(event.target.value):event.target.value;
  preferences=savePreferences(localStorage,{[key]:value});
  document.documentElement.classList.toggle('reduce-motion',preferences.reducedMotion);
 });

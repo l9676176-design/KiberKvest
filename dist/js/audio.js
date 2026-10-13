@@ -3,7 +3,7 @@ let currentAudio=null;
 let playbackToken=0;
 
 const ANSWER_KEYS=['a','b','c','d'];
-const AUDIO_REVISIONS=new Map([['2-5-c','20261013-9']]);
+const AUDIO_REVISIONS=new Map([['2-5-c','20261014-1']]);
 const pad=value=>String(value).padStart(2,'0');
 const revision=(missionId,slideId,key)=>{const value=AUDIO_REVISIONS.get(`${missionId}-${slideId}-${key}`);return value?`?v=${value}`:'';};
 

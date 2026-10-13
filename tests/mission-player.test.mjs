@@ -66,6 +66,16 @@ test('неверный ответ в миссии «Сообщение от па
   assert.doesNotMatch(html,/Нельзя проверять человека через тот же подозрительный чат\./);
 });
 
+test('неверный ответ в оставшихся миссиях показывает пояснение именно выбранного варианта',()=>{
+  const mission=MISSIONS.find(({id})=>id===8);
+  const slide=mission.slides.find(({id})=>id===4);
+  const state=answerQuestion(createMissionState(8,4),slide,2);
+  const html=renderMissionPlayer(mission,state,{mode:'solo',subtitles:true});
+
+  assert.match(html,/Удаление чата уничтожит доказательства — сначала нужно сделать скриншоты и показать взрослому\./);
+  assert.doesNotMatch(html,/Рассылка увеличивает вред и аудиторию травли\./);
+});
+
 test('выбранные варианты ответа имеют заметное состояние',async()=>{
   const comic=await readFile(new URL('../src/styles/comic.css',import.meta.url),'utf8');
   assert.match(comic,/\.answer\.selected\{[^}]+\}/);
