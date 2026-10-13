@@ -80,6 +80,23 @@ test('в вопросе 5 варианты Б и В запускают разн�
   assert.notEqual(optionB[0].path,optionC[0].path);
 });
 
+test('неверный ответ Г в вопросе 4 озвучивается вместе с объяснением ошибки',()=>{
+  const slide=MISSIONS[0].slides[4];
+  const paths=audio.audioPathsForSlide(1,slide);
+  const items=audio.answerPlaybackItems({
+    paths,
+    answerIndex:3,
+    answerText:`Вариант Г. ${slide.answers[3]}`,
+    feedback:'wrong',
+    feedbackText:slide.bad,
+  });
+
+  assert.deepEqual(items,[
+    {path:'assets/audio/mission-01/slide-05-answer-d.mp3',text:'Вариант Г. Солнечная погода'},
+    {path:'assets/audio/mission-01/slide-05-wrong.mp3',text:'Погода не говорит о безопасности сообщения.'},
+  ]);
+});
+
 test('одиночный вопрос запускает собственную реплику выбранного варианта',async()=>{
   const main=await import('node:fs/promises').then(({readFile})=>
     readFile(new URL('../src/js/main.js',import.meta.url),'utf8'),
