@@ -26,3 +26,35 @@ test('service worker кэширует оболочку и восемьдесят
  for(const path of references)await access(fileURLToPath(new URL(`../src/${path}`,import.meta.url)));
  for(const mission of MISSIONS)for(const slide of mission.slides)await access(fileURLToPath(new URL(`../src/${slide.image}`,import.meta.url)));
 });
+
+test('обновлённый service worker сразу заменяет старый кэш и перезагружает открытое приложение',async()=>{
+ const source=await readFile(new URL('../src/sw.js',import.meta.url),'utf8');
+ const listeners={};
+ const deleted=[];
+ const navigated=[];
+ let skipped=false;
+ const currentCache=source.match(/const CACHE_NAME='([^']+)'/)?.[1];
+ const client={url:'https://example.test/KiberKvest/',navigate:async(url)=>{navigated.push(url);}};
+ const context={
+  caches:{
+   open:async()=>({addAll:async()=>{}}),
+   keys:async()=>['kiberkvest-shell-old',currentCache],
+   delete:async(key)=>{deleted.push(key);return true;},
+  },
+  self:{
+   addEventListener:(type,handler)=>{listeners[type]=handler;},
+   skipWaiting:()=>{skipped=true;},
+   clients:{claim:async()=>{},matchAll:async()=>[client]},
+  },
+ };
+ new Script(source).runInNewContext(context);
+ let installWork;
+ listeners.install({waitUntil:(work)=>{installWork=work;}});
+ await installWork;
+ assert.equal(skipped,true);
+ let activateWork;
+ listeners.activate({waitUntil:(work)=>{activateWork=work;}});
+ await activateWork;
+ assert.deepEqual(deleted,['kiberkvest-shell-old']);
+ assert.deepEqual(navigated,[client.url]);
+});
