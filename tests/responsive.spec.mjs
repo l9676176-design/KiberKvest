@@ -8,3 +8,8 @@ test('адаптивные стили учитывают телефон, пла�
  const all=layout+comic;
  for(const marker of ['safe-area-inset-bottom','max-width:600px','max-width:900px','min-width:1280px','aspect-ratio:16/9'])assert.match(all,new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
 });
+
+test('заставка целиком помещается на экране телефона',async()=>{
+ const layout=await readFile(new URL('../src/styles/layout.css',import.meta.url),'utf8');
+ assert.match(layout,/@media\(max-width:600px\)[\s\S]*\.splash img\{object-fit:contain;object-position:center\}/);
+});
