@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { SPLASH_MAX_MS, SPLASH_MIN_MS, determineStartup } from '../app/js/startup.js';
-import { getOfflineState } from '../app/js/network.js';
+import { SPLASH_MAX_MS, SPLASH_MIN_MS, determineStartup } from '../src/js/startup.js';
+import { getOfflineState } from '../src/js/network.js';
 
 test('заставка укладывается в диапазон 3,5–6 секунд',()=>{
   assert.equal(SPLASH_MIN_MS,3500);

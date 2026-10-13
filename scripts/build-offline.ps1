@@ -11,7 +11,7 @@ if (-not ([IO.Path]::GetFullPath($distPath).StartsWith([IO.Path]::GetFullPath($p
 if (Test-Path -LiteralPath $distPath) { Remove-Item -LiteralPath $distPath -Recurse -Force }
 New-Item -ItemType Directory -Path $distPath -Force | Out-Null
 New-Item -ItemType Directory -Path $downloadsPath -Force | Out-Null
-Copy-Item -Path (Join-Path $projectRoot 'app\*') -Destination $distPath -Recurse -Force
+Copy-Item -Path (Join-Path $projectRoot 'src\*') -Destination $distPath -Recurse -Force
 $legacyPngFiles = Get-ChildItem -LiteralPath (Join-Path $distPath 'assets') -Recurse -File -Filter '*.png'
 foreach ($legacyPngFile in $legacyPngFiles) {
     $webpPath = [IO.Path]::ChangeExtension($legacyPngFile.FullName, '.webp')

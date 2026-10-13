@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { answerQuestion, canAdvance, createMissionState, nextSlide } from '../app/js/mission-state.js';
+import { answerQuestion, canAdvance, createMissionState, nextSlide } from '../src/js/mission-state.js';
 
 test('ошибка блокирует переход, правильный ответ открывает его',()=>{
   const slide={kind:'question',selection:'single',correct:1};

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { canStartSound, shouldAutoNarrate } from '../app/js/audio.js';
+import { canStartSound, shouldAutoNarrate } from '../src/js/audio.js';
 
 test('звук не запускается до первого действия пользователя',()=>{
   assert.equal(canStartSound({sound:true,interacted:false}),false);

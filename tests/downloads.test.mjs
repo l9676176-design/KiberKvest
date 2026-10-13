@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { DOWNLOAD_STATES, commitMissionVersion } from '../app/js/storage.js';
+import { DOWNLOAD_STATES, commitMissionVersion } from '../src/js/storage.js';
 
 test('поддерживаются пять состояний загрузки',()=>{
   assert.deepEqual(DOWNLOAD_STATES,['not-downloaded','downloading','downloaded','update-available','error']);

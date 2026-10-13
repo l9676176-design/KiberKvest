@@ -3,8 +3,8 @@ import { access, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 
-import { MISSIONS } from '../app/data/missions/manifest.js';
-import { audioPathsForSlide } from '../app/js/audio.js';
+import { MISSIONS } from '../src/data/missions/manifest.js';
+import { audioPathsForSlide } from '../src/js/audio.js';
 
 test('десять миссий содержат полный комплект из 340 MP3', async () => {
   const paths = MISSIONS.flatMap((mission) =>
@@ -15,14 +15,14 @@ test('десять миссий содержат полный комплект �
   assert.equal(new Set(paths).size, 340);
   for (const relativePath of paths) {
     assert.equal(relativePath.endsWith('.mp3'), true);
-    const absolutePath = fileURLToPath(new URL(`../app/${relativePath}`, import.meta.url));
+    const absolutePath = fileURLToPath(new URL(`../src/${relativePath}`, import.meta.url));
     await access(absolutePath);
     assert.equal((await stat(absolutePath)).size > 0, true);
   }
 });
 
 test('интерфейс сообщает, что голос создан ИИ', async () => {
-  const source = await import('../app/screens/settings.js');
+  const source = await import('../src/screens/settings.js');
   assert.match(source.renderSettings({
     sound: true,
     volume: 0.8,
@@ -37,7 +37,7 @@ test('интерфейс сообщает, что голос создан ИИ',
 
 test('MP3 всех миссий входят в автономный кэш', async () => {
   const source = await import('node:fs/promises').then(({ readFile }) =>
-    readFile(new URL('../app/sw.js', import.meta.url), 'utf8'),
+    readFile(new URL('../src/sw.js', import.meta.url), 'utf8'),
   );
   assert.match(source, /MISSION_AUDIO/);
   assert.match(source, /\.\.\.MISSION_AUDIO/);

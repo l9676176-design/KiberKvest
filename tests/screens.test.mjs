@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { MISSIONS } from '../app/data/missions/manifest.js';
-import { renderLibrary } from '../app/screens/library.js';
-import { renderMenu } from '../app/screens/menu.js';
-import { renderMode } from '../app/screens/mode.js';
+import { MISSIONS } from '../src/data/missions/manifest.js';
+import { renderLibrary } from '../src/screens/library.js';
+import { renderMenu } from '../src/screens/menu.js';
+import { renderMode } from '../src/screens/mode.js';
 
 test('выбор режима содержит три утверждённых режима',()=>{
  const html=renderMode();

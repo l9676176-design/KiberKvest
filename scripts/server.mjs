@@ -7,7 +7,7 @@ import { spawn } from 'node:child_process';
 const host='127.0.0.1';
 const port=Number(process.env.KIBERKVEST_PORT||4173);
 const base=dirname(fileURLToPath(import.meta.url));
-const root=existsSync(join(base,'index.html'))?base:resolve(join(base,'../app'));
+const root=existsSync(join(base,'index.html'))?base:resolve(join(base,'../src'));
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.webmanifest':'application/manifest+json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.mp3':'audio/mpeg'};
 
 const server=createServer((request,response)=>{

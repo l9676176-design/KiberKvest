@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { MISSIONS, validateMissionCatalog } from '../app/data/missions/manifest.js';
+import { MISSIONS, validateMissionCatalog } from '../src/data/missions/manifest.js';
 
 test('каталог содержит десять полноценных миссий с балансом категорий 5/5', () => {
   const result = validateMissionCatalog(MISSIONS);

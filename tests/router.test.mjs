@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { ROUTES, buildRoute, parseRoute } from '../app/js/router.js';
+import { ROUTES, buildRoute, parseRoute } from '../src/js/router.js';
 
-test('маршрутизатор поддерживает все экраны из brief.md', () => {
+test('маршрутизатор поддерживает все экраны из docs/brief.md', () => {
   assert.deepEqual(ROUTES, ['splash','loading','offline','mode','age','menu','library','downloads','mission','result','settings']);
 });
 

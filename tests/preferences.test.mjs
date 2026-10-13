@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { loadPreferences, savePreferences } from '../app/js/preferences.js';
+import { loadPreferences, savePreferences } from '../src/js/preferences.js';
 
 function memoryStorage(){const data=new Map();return {getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,String(v))};}
 
