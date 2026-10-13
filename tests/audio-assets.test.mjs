@@ -37,12 +37,12 @@ test('интерфейс сообщает, что голос создан ИИ',
   }), /озвучка создана ИИ/i);
 });
 
-test('MP3 всех миссий входят в автономный кэш', async () => {
+test('MP3 миссий не блокируют установку обновления', async () => {
   const source = await import('node:fs/promises').then(({ readFile }) =>
     readFile(new URL('../src/sw.js', import.meta.url), 'utf8'),
   );
   assert.match(source, /MISSION_AUDIO/);
-  assert.match(source, /\.\.\.MISSION_AUDIO/);
+  assert.doesNotMatch(source, /addAll\(\[\.\.\.APP_SHELL,\.\.\.MISSION_ASSETS,\.\.\.MISSION_AUDIO\]\)/);
 });
 
 test('выбор варианта озвучивается до итоговой реплики',()=>{

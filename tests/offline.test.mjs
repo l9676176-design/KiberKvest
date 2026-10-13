@@ -13,18 +13,28 @@ test('PWA устанавливается как русское автономн�
  assert.equal(manifest.icons.length>0,true);
 });
 
-test('service worker кэширует оболочку и восемьдесят страниц миссий',async()=>{
+test('service worker устанавливает оболочку независимо от тяжёлых файлов миссий',async()=>{
  const source=await readFile(new URL('../src/sw.js',import.meta.url),'utf8');
  assert.match(source,/MISSION_ASSETS/);
  assert.match(source,/10/);
  assert.match(source,/8/);
  assert.match(source,/addAll/);
+ assert.match(source,/addAll\(APP_SHELL\)/);
+ assert.doesNotMatch(source,/addAll\(\[\.\.\.APP_SHELL,\.\.\.MISSION_ASSETS/);
  assert.match(source,/fetch/);
  assert.doesNotThrow(()=>new Script(source));
  const shell=source.match(/const APP_SHELL=\[(.*?)\];/s)?.[1]||'';
  const references=[...shell.matchAll(/'([^']+)'/g)].map(match=>match[1]).filter(path=>path!=='./');
  for(const path of references)await access(fileURLToPath(new URL(`../src/${path}`,import.meta.url)));
  for(const mission of MISSIONS)for(const slide of mission.slides)await access(fileURLToPath(new URL(`../src/${slide.image}`,import.meta.url)));
+});
+
+test('страница принудительного обновления удаляет старый worker и его кэши',async()=>{
+ const source=await readFile(new URL('../src/update.html',import.meta.url),'utf8');
+ assert.match(source,/getRegistrations/);
+ assert.match(source,/unregister/);
+ assert.match(source,/caches\.keys/);
+ assert.match(source,/location\.replace/);
 });
 
 test('обновлённый service worker сразу заменяет старый кэш и перезагружает открытое приложение',async()=>{
