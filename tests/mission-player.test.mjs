@@ -28,6 +28,17 @@ test('вопрос с признаками требует точное множ�
   assert.equal(nextSlide(state,8).slide,2);
 });
 
+test('ошибочный признак не добавляет общую реплику к следующим вариантам',()=>{
+  const slide={kind:'question',selection:'multiple',correctSet:[0,1,2]};
+  let state=createMissionState(1);
+  state=answerQuestion(state,slide,3);
+  assert.deepEqual(state.selected,[3]);
+  assert.equal(state.feedback,null);
+  state=answerQuestion(state,slide,1);
+  assert.deepEqual(state.selected,[3,1]);
+  assert.equal(state.feedback,null);
+});
+
 test('выбранные варианты ответа имеют заметное состояние',async()=>{
   const comic=await readFile(new URL('../src/styles/comic.css',import.meta.url),'utf8');
   assert.match(comic,/\.answer\.selected\{[^}]+\}/);
