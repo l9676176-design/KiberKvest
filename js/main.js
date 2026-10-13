@@ -124,6 +124,6 @@ app.addEventListener('change',(event)=>{
 window.addEventListener('hashchange',render);
 window.addEventListener('online',()=>{online=true;render();});
 window.addEventListener('offline',()=>{online=false;render();});
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});navigator.serviceWorker.addEventListener('message',(event)=>{if(event.data?.type==='UPDATE_READY'&&!document.querySelector('.update-ready')){const notice=document.createElement('div');notice.className='update-ready';notice.setAttribute('role','status');notice.textContent='Обновление готово. Оно применится после завершения текущей миссии.';document.body.append(notice);}});}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{});navigator.serviceWorker.addEventListener('message',(event)=>{if(event.data?.type==='UPDATE_READY'&&!document.querySelector('.update-ready')){const notice=document.createElement('div');notice.className='update-ready';notice.setAttribute('role','status');notice.textContent='Обновление готово. Оно применится после завершения текущей миссии.';document.body.append(notice);}});}
 document.documentElement.classList.toggle('reduce-motion',preferences.reducedMotion);
 start();
