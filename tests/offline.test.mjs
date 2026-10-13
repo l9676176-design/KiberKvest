@@ -58,3 +58,12 @@ test('обновлённый service worker сразу заменяет стар
  assert.deepEqual(deleted,['kiberkvest-shell-old']);
  assert.deepEqual(navigated,[client.url]);
 });
+
+test('страница, стили и скрипты проверяются в сети раньше старого кэша',async()=>{
+ const worker=await readFile(new URL('../src/sw.js',import.meta.url),'utf8');
+ const main=await readFile(new URL('../src/js/main.js',import.meta.url),'utf8');
+ assert.match(worker,/request\.destination==='script'/);
+ assert.match(worker,/request\.destination==='style'/);
+ assert.match(worker,/networkFirst/);
+ assert.match(main,/updateViaCache:'none'/);
+});
