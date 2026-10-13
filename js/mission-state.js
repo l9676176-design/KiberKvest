@@ -6,8 +6,10 @@ export function answerQuestion(state,slide,answer){
  if(slide.selection==='multiple'){
   const selected=state.selected.includes(answer)?state.selected.filter(item=>item!==answer):[...state.selected,answer];
   const complete=sameSet(selected,slide.correctSet);
-  const hasWrong=selected.some(item=>!slide.correctSet.includes(item));
-  return {...state,selected,feedback:complete?'correct':hasWrong?'wrong':null,complete};
+  // In a multiple-choice question every tap only selects/deselects that item.
+  // Do not attach the generic "wrong" narration to individual choices: it
+  // sounds as if the following answer belongs to the previous one.
+  return {...state,selected,feedback:complete?'correct':null,complete};
  }
  const complete=answer===slide.correct;
  return {...state,selected:[answer],feedback:complete?'correct':'wrong',complete};

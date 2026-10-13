@@ -1,4 +1,4 @@
-const CACHE_NAME='kiberkvest-shell-2026.10-reliable-update';
+const CACHE_NAME='kiberkvest-shell-2026.10-answer-audio-fix';
 const APP_SHELL=['./','index.html','manifest.webmanifest','data/version.json','data/missions/manifest.js','data/missions/types.js','js/main.js','js/router.js','js/startup.js','js/network.js','js/preferences.js','js/storage.js','js/mission-state.js','js/audio.js','js/modes/index.js','js/modes/solo.js','js/modes/family.js','js/modes/classroom.js','screens/shared.js','screens/loading.js','screens/offline.js','screens/mode.js','screens/age.js','screens/menu.js','screens/library.js','screens/downloads.js','screens/settings.js','screens/mission-player.js','screens/result.js','styles/tokens.css','styles/layout.css','styles/comic.css','styles/accessibility.css','assets/ui/kiberkvest-splash.webp','assets/ui/kiberkvest-mode-selection.webp','assets/ui/icon.svg'];
 const MISSION_ASSETS=Array.from({length:10},(_,missionIndex)=>Array.from({length:8},(_,slideIndex)=>`assets/missions/mission-${String(missionIndex+1).padStart(2,'0')}/page-${slideIndex+1}.webp`)).flat();
 const MISSION_AUDIO=Array.from({length:10},(_,missionIndex)=>{
