@@ -1,0 +1,2 @@
+import { screen } from './shared.js';
+export function renderAge(){return screen('Выбери возраст',`<div class="choice-grid"><button class="choice-card" data-action="choose-age" data-age="7-9"><strong>7–9 лет</strong><span>Короткие вопросы и помощь голосом</span></button><button class="choice-card" data-action="choose-age" data-age="10-12"><strong>10–12 лет</strong><span>Больше деталей и сложнее выбор</span></button></div>`);}

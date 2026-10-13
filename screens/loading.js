@@ -1,0 +1,2 @@
+import { screen } from './shared.js';
+export function renderLoading(stage='Проверяем сохранённые миссии',progress=20){return screen('Подготовка к приключению',`<div class="loading-card"><div class="mascot" aria-hidden="true">✦</div><p>${stage}</p><div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progress}"><i style="width:${progress}%"></i></div><button class="primary hidden" data-action="continue-startup">Продолжить</button></div>`,{back:false,className:'centered'});}
