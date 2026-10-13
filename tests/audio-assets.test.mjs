@@ -57,3 +57,33 @@ test('выбор варианта озвучивается до итоговой
     [{path:'answer-a.mp3',text:'Вариант А'},{path:'correct.mp3',text:'Молодец'}],
   );
 });
+
+test('в вопросе 5 варианты Б и В запускают разные реплики до общей оценки',()=>{
+  const paths={answer1:'slide-06-answer-b.mp3',answer2:'slide-06-answer-c.mp3',wrong:'slide-06-wrong.mp3'};
+  const optionB=audio.answerPlaybackItems({
+    paths,
+    answerIndex:1,
+    answerText:'Вариант Б. Просто удалить переписку',
+    feedback:'wrong',
+    feedbackText:'Одного удаления или спора недостаточно.',
+  });
+  const optionC=audio.answerPlaybackItems({
+    paths,
+    answerIndex:2,
+    answerText:'Вариант В. Поспорить с мошенником',
+    feedback:'wrong',
+    feedbackText:'Одного удаления или спора недостаточно.',
+  });
+
+  assert.deepEqual(optionB.map(item=>item.path),['slide-06-answer-b.mp3','slide-06-wrong.mp3']);
+  assert.deepEqual(optionC.map(item=>item.path),['slide-06-answer-c.mp3','slide-06-wrong.mp3']);
+  assert.notEqual(optionB[0].path,optionC[0].path);
+});
+
+test('одиночный вопрос запускает собственную реплику выбранного варианта',async()=>{
+  const main=await import('node:fs/promises').then(({readFile})=>
+    readFile(new URL('../src/js/main.js',import.meta.url),'utf8'),
+  );
+  assert.doesNotMatch(main,/else\{playRecorded\(paths\[feedback\]/);
+  assert.match(main,/playRecordedSequence\(answerPlaybackItems/);
+});
