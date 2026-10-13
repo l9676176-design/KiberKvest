@@ -56,6 +56,16 @@ test('неверный вариант в вопросе 4 показывает �
   assert.match(html,/Погода не говорит о безопасности сообщения\./);
 });
 
+test('неверный ответ в миссии «Сообщение от папы» показывает своё точное пояснение',()=>{
+  const mission=MISSIONS.find(({id})=>id===2);
+  const slide=mission.slides.find(({id})=>id===3);
+  const state=answerQuestion(createMissionState(2,3),slide,2);
+  const html=renderMissionPlayer(mission,state,{mode:'solo',subtitles:true});
+
+  assert.match(html,/Переводить деньги до проверки просьбы опасно\./);
+  assert.doesNotMatch(html,/Нельзя проверять человека через тот же подозрительный чат\./);
+});
+
 test('выбранные варианты ответа имеют заметное состояние',async()=>{
   const comic=await readFile(new URL('../src/styles/comic.css',import.meta.url),'utf8');
   assert.match(comic,/\.answer\.selected\{[^}]+\}/);

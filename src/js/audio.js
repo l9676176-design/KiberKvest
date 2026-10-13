@@ -3,22 +3,32 @@ let currentAudio=null;
 let playbackToken=0;
 
 const ANSWER_KEYS=['a','b','c','d'];
+const AUDIO_REVISIONS=new Map([['2-5-c','20261013-9']]);
 const pad=value=>String(value).padStart(2,'0');
+const revision=(missionId,slideId,key)=>{const value=AUDIO_REVISIONS.get(`${missionId}-${slideId}-${key}`);return value?`?v=${value}`:'';};
 
 export function audioPathsForSlide(missionId,slide){
  const base=`assets/audio/mission-${pad(missionId)}/slide-${pad(slide.id)}`;
  const paths={scene:`${base}-scene.mp3`};
  if(slide.kind==='question'){
-  slide.answers.forEach((_,index)=>{paths[`answer${index}`]=`${base}-answer-${ANSWER_KEYS[index]}.mp3`;});
+  slide.answers.forEach((_,index)=>{const key=ANSWER_KEYS[index];paths[`answer${index}`]=`${base}-answer-${key}.mp3${revision(missionId,slide.id,key)}`;});
   paths.correct=`${base}-correct.mp3`;
   paths.wrong=`${base}-wrong.mp3`;
  }
  return paths;
 }
 
-export function answerPlaybackItems({paths,answerIndex,answerText,feedback,feedbackText}){
+export function feedbackForAnswer({slide,paths,answerIndex,feedback}){
+ if(feedback==='correct')return {path:paths.correct,text:slide.ok};
+ return {
+  path:slide.badByAnswer?.[answerIndex]?null:paths.wrong,
+  text:slide.badByAnswer?.[answerIndex]||slide.bad,
+ };
+}
+
+export function answerPlaybackItems({paths,answerIndex,answerText,feedback,feedbackText,feedbackPath=undefined}){
  const items=[{path:paths[`answer${answerIndex}`],text:answerText}];
- if(feedback)items.push({path:paths[feedback],text:feedbackText});
+ if(feedback)items.push({path:feedbackPath===undefined?paths[feedback]:feedbackPath,text:feedbackText});
  return items;
 }
 
@@ -55,7 +65,7 @@ export function playRecorded(path,{rate=1,volume=0.8,onStart,onEnd,fallbackText=
 }
 
 export function playRecordedSequence(items,{rate=1,volume=0.8}={}){
- const queue=items.filter(item=>item?.path);
+ const queue=items.filter(item=>item?.path||item?.text);
  if(!queue.length)return false;
  if(typeof Audio==='undefined')return speak(queue.map(item=>item.text).filter(Boolean).join('. '),{rate,volume});
  stopSpeech();
@@ -63,6 +73,13 @@ export function playRecordedSequence(items,{rate=1,volume=0.8}={}){
  const playNext=index=>{
   if(token!==playbackToken||index>=queue.length){currentAudio=null;return;}
   const item=queue[index];
+  if(!item.path){
+   if(!('speechSynthesis' in globalThis)||!item.text){item.onEnd?.();playNext(index+1);return;}
+   const utterance=new SpeechSynthesisUtterance(item.text);currentUtterance=utterance;
+   utterance.lang='ru-RU';utterance.rate=rate;utterance.volume=volume;utterance.onstart=()=>item.onStart?.();
+   utterance.onend=()=>{if(token!==playbackToken)return;currentUtterance=null;item.onEnd?.();playNext(index+1);};
+   utterance.onerror=utterance.onend;speechSynthesis.speak(utterance);return;
+  }
   const audio=new Audio(item.path);currentAudio=audio;audio.playbackRate=rate;audio.volume=volume;
   let finished=false;
   const fallback=()=>{
