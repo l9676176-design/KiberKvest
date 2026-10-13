@@ -1,5 +1,5 @@
 import { MISSIONS } from '../data/missions/manifest.js';
-import { audioPathsForSlide, playFanfare, playRecorded, playRecordedSequence, shouldAutoNarrate, speak, stopSpeech } from './audio.js';
+import { answerPlaybackItems, audioPathsForSlide, playFanfare, playRecorded, playRecordedSequence, shouldAutoNarrate, speak, stopSpeech } from './audio.js';
 import { answerQuestion, createMissionState, nextSlide, previousSlide } from './mission-state.js';
 import { checkNetwork, getOfflineState } from './network.js';
 import { loadPreferences, loadProgress, savePreferences, saveProgress } from './preferences.js';
@@ -89,7 +89,7 @@ app.addEventListener('click',async(event)=>{
  if(action==='filter'){libraryFilter=button.dataset.filter;render();return;}
  if(action==='play'||action==='replay'){missionState=createMissionState(Number(button.dataset.mission));persistProgress();navigate('mission',{mission:missionState.missionId,slide:1});return;}
  if(action==='resume'){missionState=loadResume();navigate('mission',{mission:missionState.missionId,slide:missionState.slide});return;}
- if(action==='answer'){const mission=currentMission();const slide=mission.slides[missionState.slide-1];missionState=answerQuestion(missionState,slide,Number(button.dataset.answer));const feedback=missionState.feedback;const paths=audioPathsForSlide(mission.id,slide);const feedbackText=feedback==='correct'?slide.ok:slide.bad;persistProgress();render();playRecorded(paths[feedback],{...playbackOptions(),fallbackText:feedbackText});return;}
+ if(action==='answer'){const mission=currentMission();const slide=mission.slides[missionState.slide-1];const answerIndex=Number(button.dataset.answer);missionState=answerQuestion(missionState,slide,answerIndex);const feedback=missionState.feedback;const paths=audioPathsForSlide(mission.id,slide);const feedbackText=feedback==='correct'?slide.ok:slide.bad;persistProgress();render();if(slide.selection==='multiple'){playRecordedSequence(answerPlaybackItems({paths,answerIndex,answerText:`Вариант ${['А','Б','В','Г'][answerIndex]}. ${slide.answers[answerIndex]}`,feedback,feedbackText}),playbackOptions());}else{playRecorded(paths[feedback],{...playbackOptions(),fallbackText:feedbackText});}return;}
  if(action==='back-slide'){missionState=previousSlide(missionState);persistProgress();navigate('mission',{mission:missionState.missionId,slide:missionState.slide});render();return;}
  if(action==='next-slide'){if(missionState.slide===8){missionState={...missionState,complete:true};persistProgress();navigate('result',{mission:missionState.missionId});return;}missionState=nextSlide(missionState,8);persistProgress();navigate('mission',{mission:missionState.missionId,slide:missionState.slide});render();return;}
  if(action==='repeat-question'){playRecordedSequence(lastQuestionAudio,playbackOptions());return;}

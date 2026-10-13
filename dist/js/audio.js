@@ -16,6 +16,12 @@ export function audioPathsForSlide(missionId,slide){
  return paths;
 }
 
+export function answerPlaybackItems({paths,answerIndex,answerText,feedback,feedbackText}){
+ const items=[{path:paths[`answer${answerIndex}`],text:answerText}];
+ if(feedback)items.push({path:paths[feedback],text:feedbackText});
+ return items;
+}
+
 export function canStartSound({sound,interacted}){return Boolean(sound&&interacted);}
 export function shouldAutoNarrate({mode,age,voice,interacted}){return mode==='solo'&&age==='7-9'&&voice&&interacted;}
 export function stopSpeech(){

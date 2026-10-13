@@ -4,7 +4,9 @@ import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 
 import { MISSIONS } from '../src/data/missions/manifest.js';
-import { audioPathsForSlide } from '../src/js/audio.js';
+import * as audio from '../src/js/audio.js';
+
+const { audioPathsForSlide } = audio;
 
 test('десять миссий содержат полный комплект из 340 MP3', async () => {
   const paths = MISSIONS.flatMap((mission) =>
@@ -41,4 +43,17 @@ test('MP3 всех миссий входят в автономный кэш', as
   );
   assert.match(source, /MISSION_AUDIO/);
   assert.match(source, /\.\.\.MISSION_AUDIO/);
+});
+
+test('выбор варианта озвучивается до итоговой реплики',()=>{
+  assert.equal(typeof audio.answerPlaybackItems,'function');
+  const paths={answer0:'answer-a.mp3',correct:'correct.mp3',wrong:'wrong.mp3'};
+  assert.deepEqual(
+    audio.answerPlaybackItems({paths,answerIndex:0,answerText:'Вариант А',feedback:null,feedbackText:''}),
+    [{path:'answer-a.mp3',text:'Вариант А'}],
+  );
+  assert.deepEqual(
+    audio.answerPlaybackItems({paths,answerIndex:0,answerText:'Вариант А',feedback:'correct',feedbackText:'Молодец'}),
+    [{path:'answer-a.mp3',text:'Вариант А'},{path:'correct.mp3',text:'Молодец'}],
+  );
 });
