@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Обновление КиберКвеста</title>
+  <style>
+    html,body{min-height:100%;margin:0;background:#101217;color:#ffd83d;font:700 18px/1.45 system-ui,sans-serif}
+    body{display:grid;place-items:center;text-align:center;padding:24px;box-sizing:border-box}
+  </style>
+</head>
+<body>
+  <main>Обновляю КиберКвест…</main>
+  <script>
+    (async()=>{
+      try{
+        if('serviceWorker' in navigator){
+          const registrations=await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map(registration=>registration.unregister()));
+        }
+        if('caches' in window){
+          const names=await caches.keys();
+          await Promise.all(names.filter(name=>name.startsWith('kiberkvest-')).map(name=>caches.delete(name)));
+        }
+      }finally{
+        location.replace('./?build=20261013-4');
+      }
+    })();
+  </script>
+</body>
+</html>
