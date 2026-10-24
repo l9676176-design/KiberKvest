@@ -1,4 +1,4 @@
-import { audioPathsForSlide } from './audio.js?v=20261024-1';
+import { audioPathsForSlide } from './audio.js?v=20261024-2';
 
 export const DOWNLOAD_STATES=['not-downloaded','downloading','downloaded','update-available','error'];
 export const PACKAGE_VERSION='20261024-1';
@@ -56,8 +56,14 @@ export async function cacheMission(mission,onProgress=()=>{},{signal,cacheStorag
    const response=await fetcher(path,{cache:'reload',signal});
    const type=response.headers.get('Content-Type')||'';
    const expected=path.includes('.mp3')?'audio/':'image/';
-   if(!response.ok||!type.startsWith(expected)||(await response.clone().arrayBuffer()).byteLength===0)throw new Error(`Не удалось скачать файл: ${path}`);
-   await cache.put(path,response);
+   if(response.status!==200||!type.startsWith(expected))throw new Error(`Не удалось скачать файл: ${path}`);
+   const bytes=await response.arrayBuffer();
+   if(!bytes.byteLength)throw new Error(`Пустой файл: ${path}`);
+   const headers=new Headers(response.headers);
+   // Store decoded, complete bytes independently of the CDN's transport encoding.
+   headers.delete('Vary');headers.delete('Content-Encoding');headers.delete('Content-Range');
+   headers.set('Content-Length',String(bytes.byteLength));
+   await cache.put(path,new Response(bytes,{status:200,headers}));
    onProgress((index+1)/files.length);
   }
   signal?.throwIfAborted();

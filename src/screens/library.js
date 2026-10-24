@@ -1,5 +1,5 @@
 import { screen } from './shared.js';
-import { missionDownloadState } from '../js/storage.js?v=20261024-1';
+import { missionDownloadState } from '../js/storage.js?v=20261024-2';
 export function renderLibrary(missions,downloads,filter='all',online=true,localPackage=false){
  const visible=missions.filter(m=>filter==='all'||m.category===filter);
  const labels={'not-downloaded':'Не скачана',downloading:'Загружается',downloaded:'Скачана со звуком','update-available':'Нужно скачать полный комплект',error:'Ошибка загрузки'};
