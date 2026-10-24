@@ -81,9 +81,9 @@ test('страница, стили и скрипты проверяются в �
 test('исправления миссии загружаются по новым адресам, минуя старый кэш браузера',async()=>{
  const index=await readFile(new URL('../src/index.html',import.meta.url),'utf8');
  const main=await readFile(new URL('../src/js/main.js',import.meta.url),'utf8');
- assert.match(index,/src="js\/main\.js\?v=20261014-1"/);
- assert.match(main,/from '\.\.\/data\/missions\/manifest\.js\?v=20261014-1'/);
- assert.match(main,/from '\.\/audio\.js\?v=20261014-1'/);
- assert.match(main,/from '\.\/mission-state\.js\?v=20261014-1'/);
- assert.match(main,/from '\.\.\/screens\/mission-player\.js\?v=20261014-1'/);
+ assert.match(index,/src="js\/main\.js\?v=20261024-1"/);
+ assert.match(main,/from '\.\.\/data\/missions\/manifest\.js\?v=20261024-1'/);
+ assert.match(main,/from '\.\/audio\.js\?v=20261024-1'/);
+ assert.match(main,/from '\.\/mission-state\.js\?v=20261024-1'/);
+ assert.match(main,/from '\.\.\/screens\/mission-player\.js\?v=20261024-1'/);
 });

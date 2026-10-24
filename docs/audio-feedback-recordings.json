@@ -1,0 +1,115 @@
+{
+  "voice": "ru-RU-SvetlanaNeural",
+  "created": "2026-10-24",
+  "purpose": "Build-time recordings; no external speech service is used by the application. Existing 340 recordings are unchanged.",
+  "recordings": [
+    {
+      "path": "src/assets/audio/mission-02/slide-02-wrong-b.mp3",
+      "text": "Дождь не подтверждает личность отправителя."
+    },
+    {
+      "path": "src/assets/audio/mission-02/slide-02-wrong-c.mp3",
+      "text": "Спортивная сумка не подтверждает личность отправителя."
+    },
+    {
+      "path": "src/assets/audio/mission-02/slide-03-wrong-a.mp3",
+      "text": "Ответ незнакомому номеру не подтверждает, что пишет папа."
+    },
+    {
+      "path": "src/assets/audio/mission-02/slide-03-wrong-c.mp3",
+      "text": "Переводить деньги до проверки просьбы опасно."
+    },
+    {
+      "path": "src/assets/audio/mission-02/slide-04-wrong-a.mp3",
+      "text": "Скрывать случившееся опасно — нужно сразу позвать взрослого."
+    },
+    {
+      "path": "src/assets/audio/mission-02/slide-04-wrong-c.mp3",
+      "text": "Продолжать разговор опасно — нужно сразу позвать взрослого."
+    },
+    {
+      "path": "src/assets/audio/mission-02/slide-06-wrong-a.mp3",
+      "text": "Спорить с мошенником опасно — его нужно заблокировать и рассказать взрослому."
+    },
+    {
+      "path": "src/assets/audio/mission-02/slide-06-wrong-c.mp3",
+      "text": "Удалять чат и молчать опасно — нужно заблокировать отправителя и рассказать взрослому."
+    },
+    {
+      "path": "src/assets/audio/mission-03/slide-06-wrong-c.mp3",
+      "text": "Нельзя исправлять ошибку новой выдумкой — нужно указать проверяемый источник."
+    },
+    {
+      "path": "src/assets/audio/mission-04/slide-02-wrong-a.mp3",
+      "text": "Любимый мультфильм не раскрывает домашний адрес, поэтому это не главный риск."
+    },
+    {
+      "path": "src/assets/audio/mission-04/slide-02-wrong-c.mp3",
+      "text": "Название блюда не раскрывает домашний адрес, поэтому это не главный риск."
+    },
+    {
+      "path": "src/assets/audio/mission-04/slide-03-wrong-c.mp3",
+      "text": "Отправлять незнакомцу новые фотографии опасно — нужно прекратить общение и позвать взрослого."
+    },
+    {
+      "path": "src/assets/audio/mission-04/slide-04-wrong-c.mp3",
+      "text": "Звать сетевого незнакомца домой особенно опасно — нужно отказаться и рассказать взрослому."
+    },
+    {
+      "path": "src/assets/audio/mission-04/slide-06-wrong-c.mp3",
+      "text": "Реклама магазина не относится к опасной переписке и не поможет оформить жалобу."
+    },
+    {
+      "path": "src/assets/audio/mission-05/slide-02-wrong-c.mp3",
+      "text": "Просто выключить экран недостаточно: перед переходом нужно проверить адрес сайта и источник наклейки."
+    },
+    {
+      "path": "src/assets/audio/mission-05/slide-04-wrong-c.mp3",
+      "text": "Автор подозрительного QR-кода не является независимым источником — нужно свериться с официальным путеводителем."
+    },
+    {
+      "path": "src/assets/audio/mission-06/slide-03-wrong-c.mp3",
+      "text": "Пересылать фотографию дальше нельзя — это увеличивает распространение без согласия."
+    },
+    {
+      "path": "src/assets/audio/mission-06/slide-04-wrong-c.mp3",
+      "text": "Игнорирование не остановит распространение — нужно попросить удалить копии и позвать взрослого."
+    },
+    {
+      "path": "src/assets/audio/mission-07/slide-02-wrong-a.mp3",
+      "text": "Эмоциональная подпись не подтверждает дату и происхождение снимка."
+    },
+    {
+      "path": "src/assets/audio/mission-07/slide-04-wrong-a.mp3",
+      "text": "Пересланное сообщение не является проверяемым архивным источником."
+    },
+    {
+      "path": "src/assets/audio/mission-07/slide-06-wrong-b.mp3",
+      "text": "Удалять все старые фотографии не нужно — достаточно исправить подпись и приложить источник."
+    },
+    {
+      "path": "src/assets/audio/mission-08/slide-03-wrong-c.mp3",
+      "text": "Требовать удалить аккаунт несправедливо: уйти должен не пострадавший, а травлю должны остановить взрослые."
+    },
+    {
+      "path": "src/assets/audio/mission-08/slide-04-wrong-c.mp3",
+      "text": "Удаление чата уничтожит доказательства — сначала нужно сделать скриншоты и показать взрослому."
+    },
+    {
+      "path": "src/assets/audio/mission-09/slide-04-wrong-c.mp3",
+      "text": "Скрывать источник нельзя: линия времени должна опираться на проверяемые даты и ссылки."
+    },
+    {
+      "path": "src/assets/audio/mission-10/slide-03-wrong-a.mp3",
+      "text": "Платить из-за таймера опасно — нужно остановиться и позвать взрослого."
+    },
+    {
+      "path": "src/assets/audio/mission-10/slide-04-wrong-c.mp3",
+      "text": "Пересылка друзьям распространяет возможный обман — сначала конкурс нужно проверить официально."
+    },
+    {
+      "path": "src/assets/audio/system/welcome.mp3",
+      "text": "Добро пожаловать в КиберКвест"
+    }
+  ]
+}

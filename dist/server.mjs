@@ -1,4 +1,4 @@
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { dirname, extname, join, normalize, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -7,6 +7,7 @@ import { spawn } from 'node:child_process';
 const host='127.0.0.1';
 const port=Number(process.env.KIBERKVEST_PORT||4173);
 const base=dirname(fileURLToPath(import.meta.url));
+const localPackage=existsSync(join(base,'index.html'));
 const root=existsSync(join(base,'index.html'))?base:resolve(join(base,'../src'));
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.webmanifest':'application/manifest+json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.mp3':'audio/mpeg'};
 
@@ -17,6 +18,9 @@ const server=createServer((request,response)=>{
  if(!file.startsWith(root)){response.writeHead(403);response.end('Доступ запрещён');return;}
  if(!existsSync(file)||statSync(file).isDirectory())file=join(root,'index.html');
  response.writeHead(200,{'Content-Type':types[extname(file)]||'application/octet-stream','Cache-Control':'no-cache'});
+ if(localPackage&&file===join(root,'index.html')){
+  response.end(readFileSync(file,'utf8').replace('<html lang="ru">','<html lang="ru" data-local-package="true">'));return;
+ }
  createReadStream(file).pipe(response);
 });
 

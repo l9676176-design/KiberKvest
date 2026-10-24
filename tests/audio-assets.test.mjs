@@ -9,13 +9,13 @@ import * as audio from '../src/js/audio.js';
 
 const { audioPathsForSlide, feedbackForAnswer } = audio;
 
-test('десять миссий содержат полный комплект из 340 MP3', async () => {
+test('десять миссий содержат полный комплект из 366 MP3', async () => {
   const paths = MISSIONS.flatMap((mission) =>
     mission.slides.flatMap((slide) => Object.values(audioPathsForSlide(mission.id, slide))),
   );
 
-  assert.equal(paths.length, 340);
-  assert.equal(new Set(paths).size, 340);
+  assert.equal(paths.length, 366);
+  assert.equal(new Set(paths).size, 366);
   for (const relativePath of paths) {
     assert.match(relativePath, /\.mp3(?:\?v=[\d-]+)?$/);
     const absolutePath = fileURLToPath(new URL(`../src/${relativePath}`, import.meta.url));
@@ -41,7 +41,7 @@ test('неправильные ответы миссии «Сообщение о
       if (!text) return;
       assert.deepEqual(
         feedbackForAnswer({ slide, paths, answerIndex, feedback: 'wrong' }),
-        { path: null, text },
+        { path: paths[`wrong${answerIndex}`], text },
       );
     });
   }
@@ -76,7 +76,7 @@ test('найденные несоответствия миссий 3–10 пол
     assert.equal(slide.badByAnswer?.[answerIndex], text);
     assert.deepEqual(
       feedbackForAnswer({ slide, paths, answerIndex, feedback: 'wrong' }),
-      { path: null, text },
+      { path: paths[`wrong${answerIndex}`], text },
     );
   }
 });
