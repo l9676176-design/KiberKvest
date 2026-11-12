@@ -27,7 +27,7 @@ test('скачивание сохраняет MP3 каждой сцены и о�
  const cacheStorage=memoryCaches();const old=globalThis.caches;globalThis.caches=cacheStorage;
  try{
   const result=await storage.cacheMission(MISSIONS[0],()=>{},{cacheStorage,fetcher:async path=>new Response('media',{headers:{'Content-Type':path.includes('.mp3')?'audio/mpeg':'image/webp'}})});
-  for(const path of ['assets/missions/mission-01/page-8.webp','assets/audio/mission-01/slide-08-scene.mp3','assets/audio/mission-01/slide-05-answer-d.mp3','assets/audio/mission-01/slide-06-wrong.mp3'])assert.ok(result.files.includes(path),`В автономном комплекте отсутствует ${path}`);
+  for(const path of ['assets/missions/mission-01/page-8.webp','assets/audio/mission-01/slide-08-scene.mp3','assets/audio/mission-01/slide-05-answer-d.mp3?v=20261112-1','assets/audio/mission-01/slide-06-wrong.mp3'])assert.ok(result.files.includes(path),`В автономном комплекте отсутствует ${path}`);
   assert.equal(result.complete,true);
  }finally{globalThis.caches=old;}
 });

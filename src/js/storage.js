@@ -1,4 +1,4 @@
-import { audioPathsForSlide } from './audio.js?v=20261024-2';
+import { audioPathsForSlide } from './audio.js?v=20261112-1';
 
 export const DOWNLOAD_STATES=['not-downloaded','downloading','downloaded','update-available','error'];
 export const PACKAGE_VERSION='20261024-1';

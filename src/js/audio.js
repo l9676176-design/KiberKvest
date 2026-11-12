@@ -5,7 +5,7 @@ let soundEnabled=true;
 let currentFanfare=null;
 
 const ANSWER_KEYS=['a','b','c','d'];
-const AUDIO_REVISIONS=new Map([['2-5-c','20261014-1']]);
+const AUDIO_REVISIONS=new Map([['2-5-c','20261014-1'],...['1-5-d','1-5-wrong','5-5-d','5-5-wrong','3-3-b','3-4-b'].map(key=>[key,'20261112-1'])]);
 const pad=value=>String(value).padStart(2,'0');
 const revision=(missionId,slideId,key)=>{const value=AUDIO_REVISIONS.get(`${missionId}-${slideId}-${key}`);return value?`?v=${value}`:'';};
 
@@ -15,7 +15,7 @@ export function audioPathsForSlide(missionId,slide){
  if(slide.kind==='question'){
   slide.answers.forEach((_,index)=>{const key=ANSWER_KEYS[index];paths[`answer${index}`]=`${base}-answer-${key}.mp3${revision(missionId,slide.id,key)}`;});
   paths.correct=`${base}-correct.mp3`;
-  paths.wrong=`${base}-wrong.mp3`;
+  paths.wrong=`${base}-wrong.mp3${revision(missionId,slide.id,'wrong')}`;
   slide.answers.forEach((_,index)=>{if(slide.badByAnswer?.[index])paths[`wrong${index}`]=`${base}-wrong-${ANSWER_KEYS[index]}.mp3`;});
  }
  return paths;

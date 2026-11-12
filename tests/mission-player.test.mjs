@@ -53,7 +53,7 @@ test('неверный вариант в вопросе 4 показывает �
 
   assert.match(html,/class="answer wrong" data-action="answer" data-answer="3"/);
   assert.match(html,/class="wrong-burst show"[^>]*>БУМ!<\/div>/);
-  assert.match(html,/Погода не говорит о безопасности сообщения\./);
+  assert.match(html,/Знакомый логотип можно скопировать\./);
 });
 
 test('неверный ответ в миссии «Сообщение от папы» показывает своё точное пояснение',()=>{

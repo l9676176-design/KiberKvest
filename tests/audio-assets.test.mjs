@@ -200,8 +200,8 @@ test('неверный ответ Г в вопросе 4 озвучиваетс�
   });
 
   assert.deepEqual(items,[
-    {path:'assets/audio/mission-01/slide-05-answer-d.mp3',text:'Вариант Г. Солнечная погода'},
-    {path:'assets/audio/mission-01/slide-05-wrong.mp3',text:'Погода не говорит о безопасности сообщения.'},
+    {path:'assets/audio/mission-01/slide-05-answer-d.mp3?v=20261112-1',text:'Вариант Г. Знакомый логотип в сообщении'},
+    {path:'assets/audio/mission-01/slide-05-wrong.mp3?v=20261112-1',text:'Знакомый логотип можно скопировать. Сам по себе он не доказывает ни обман, ни безопасность сообщения.'},
   ]);
 });
 
