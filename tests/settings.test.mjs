@@ -8,9 +8,12 @@ test('звук не запускается до первого действия 
   assert.equal(canStartSound({sound:true,interacted:true}),true);
 });
 
-test('авточтение включается только в solo 7–9 после действия',()=>{
-  assert.equal(shouldAutoNarrate({mode:'solo',age:'7-9',voice:true,interacted:true}),true);
-  assert.equal(shouldAutoNarrate({mode:'family',age:'7-9',voice:true,interacted:true}),false);
+test('авточтение зависит от выбора, режима и разрешений звука',()=>{
+  const enabled={sound:true,mode:'solo',age:'7-12',autoNarrate:true,voice:true,interacted:true};
+  assert.equal(shouldAutoNarrate(enabled),true);
+  for(const patch of [{autoNarrate:false},{autoNarrate:null},{mode:'family'},{mode:'classroom'},{voice:false},{sound:false},{interacted:false}]){
+    assert.equal(shouldAutoNarrate({...enabled,...patch}),false);
+  }
 });
 
 test('изменение настроек обрабатывается одним слушателем',async()=>{

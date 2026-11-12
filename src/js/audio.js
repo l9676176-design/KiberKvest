@@ -36,7 +36,7 @@ export function answerPlaybackItems({paths,answerIndex,answerText,feedback,feedb
 }
 
 export function canStartSound({sound,interacted}){return Boolean(sound&&interacted);}
-export function shouldAutoNarrate({sound=true,mode,age,voice,interacted}){return sound&&mode==='solo'&&age==='7-9'&&voice&&interacted;}
+export function shouldAutoNarrate({sound=true,mode,autoNarrate,voice,interacted}){return Boolean(sound&&mode==='solo'&&autoNarrate===true&&voice&&interacted);}
 export function setSoundEnabled(enabled){soundEnabled=Boolean(enabled);if(!soundEnabled)stopSpeech();}
 export function stopSpeech(){
  playbackToken+=1;

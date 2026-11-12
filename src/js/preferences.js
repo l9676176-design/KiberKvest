@@ -1,8 +1,13 @@
 const KEY='kiberkvest.preferences.v1';
-export const DEFAULT_PREFERENCES=Object.freeze({mode:'solo',age:'7-9',sound:true,volume:0.8,voice:true,speechRate:'normal',subtitles:true,reducedMotion:false,interacted:false,firstRun:true});
+export const DEFAULT_PREFERENCES=Object.freeze({mode:'solo',age:'7-12',autoNarrate:null,sound:true,volume:0.8,voice:true,speechRate:'normal',subtitles:true,reducedMotion:false,interacted:false,firstRun:true});
 
 export function loadPreferences(storage=localStorage){
- try{return {...DEFAULT_PREFERENCES,...JSON.parse(storage.getItem(KEY)||'{}')};}catch{return {...DEFAULT_PREFERENCES};}
+ try{
+  const saved=JSON.parse(storage.getItem(KEY)||'{}')||{};
+  const autoNarrate=typeof saved.autoNarrate==='boolean'?saved.autoNarrate:
+   saved.age==='7-9'?true:saved.age==='10-12'?false:null;
+  return {...DEFAULT_PREFERENCES,...saved,age:'7-12',autoNarrate};
+ }catch{return {...DEFAULT_PREFERENCES};}
 }
 
 export function savePreferences(storage=localStorage,patch={}){

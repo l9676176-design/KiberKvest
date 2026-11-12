@@ -114,8 +114,8 @@ app.addEventListener('click',async(event)=>{
  const action=button.dataset.action;
  if(action==='back'){history.length>1?history.back():navigate('menu');return;}
  if(action==='go'){navigate(button.dataset.route);return;}
- if(action==='choose-mode'){preferences=savePreferences(localStorage,{mode:button.dataset.mode});navigate('age');return;}
- if(action==='choose-age'){preferences=savePreferences(localStorage,{age:button.dataset.age,firstRun:false});navigate('menu');return;}
+ if(action==='choose-mode'){preferences=savePreferences(localStorage,{mode:button.dataset.mode});if(preferences.autoNarrate===null){navigate('age');}else{preferences=savePreferences(localStorage,{firstRun:false});navigate('menu');}return;}
+ if(action==='choose-reading'){preferences=savePreferences(localStorage,{age:'7-12',autoNarrate:button.dataset.autoNarrate==='true',firstRun:false});navigate('menu');return;}
  if(action==='set-mode'){preferences=savePreferences(localStorage,{mode:button.dataset.mode});navigate('library');return;}
  if(action==='filter'){libraryFilter=button.dataset.filter;render();return;}
  if(action==='play'||action==='replay'){const id=Number(button.dataset.mission);if(!online&&!localPackage&&!(await verifyMissionDownload(MISSIONS.find(m=>m.id===id),downloads[id]))){downloads={...downloads,[id]:{state:'not-downloaded'}};saveDownloads(localStorage,downloads);navigate('offline');return;}missionState=createMissionState(id);persistProgress();navigate('mission',{mission:missionState.missionId,slide:1});return;}
@@ -147,7 +147,7 @@ app.addEventListener('change',(event)=>{
  const value=control.type==='checkbox'?control.checked:control.type==='range'?Number(control.value):control.value;
  preferences=savePreferences(localStorage,{[key]:value});
  if(key==='sound')setSoundEnabled(value);
- if(key==='voice'&&!value)stopSpeech();
+ if((key==='voice'||key==='autoNarrate')&&!value)stopSpeech();
  document.documentElement.classList.toggle('reduce-motion',preferences.reducedMotion);
 });
 
